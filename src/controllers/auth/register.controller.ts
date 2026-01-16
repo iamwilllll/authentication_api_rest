@@ -1,13 +1,16 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
+import { UserModel } from '../../models/index.js';
+import { ApiResponse } from '../../helpers/index.js';
+import { UserT } from '../../types/index.js';
 
-export function registerController(req: Request, res: Response) {
+export async function registerController(req: Request, res: Response, next: NextFunction) {
     try {
-        const { name, email, password, repeatPassword } = req.body;
+        const { name, email, password } = req.body;
+        const newUser = new UserModel({ name, email, password });
+        const savedUser = await newUser.save();
 
-        res.json({ name, email, password, repeatPassword });
+        ApiResponse.success<UserT>(res, 201, 'User was created sucessfull', savedUser);
     } catch (err) {
-        console.log(err);
-    } finally {
-        console.log('finally');
+        next(err);
     }
 }
