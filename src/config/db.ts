@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { env } from './env.js';
 import { exit } from 'node:process';
-import colors from 'colors'
+import colors from 'colors';
 
 export class Database {
     static async connect() {

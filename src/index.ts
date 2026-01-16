@@ -1,4 +1,4 @@
-import { Server,Database } from './config/index.js';
+import { Server, Database } from './config/index.js';
 import express from 'express';
 import appRouter from './routes/index.js';
 

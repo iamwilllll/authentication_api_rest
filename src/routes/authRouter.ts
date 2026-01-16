@@ -5,6 +5,6 @@ import { errorMiddleware } from '../middlewares/errorMiddleware.middleware.js';
 
 const authRouter: Router = Router();
 
-authRouter.post('/register', registerMiddlewares, handleInputErrors, registerController  , errorMiddleware);
+authRouter.post('/register', registerMiddlewares, handleInputErrors, registerController, errorMiddleware);
 
 export default authRouter;

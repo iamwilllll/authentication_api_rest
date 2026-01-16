@@ -4,5 +4,3 @@ export type RegisterT = {
     password: string;
     repeatPassword: string;
 };
-
-

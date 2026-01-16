@@ -7,4 +7,3 @@ export const env = {
         URL: process.env.DATABASE_URL || '',
     },
 };
-
