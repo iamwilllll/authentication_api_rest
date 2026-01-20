@@ -10,6 +10,8 @@ const UserSchema = new Schema<UserDocT>(
         email: { type: String, required: true, trim: true, lowercase: true, unique: true },
         password: { type: String, required: true, trim: true },
         role: { type: String, required: true, trim: true, default: 'user' },
+        otpCode: { type: String, required: false, trim: true },
+        otpCodeExpiration: { type: Date, required: false },
     },
     { timestamps: true, versionKey: false }
 );

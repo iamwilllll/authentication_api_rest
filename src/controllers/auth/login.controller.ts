@@ -4,6 +4,7 @@ import { UserModel } from '../../models/user.model.js';
 import { AppError } from '../../errors/appError.error.js';
 import { comparePassword, createJWT, getUserWithOutPass } from '../../utils/index.js';
 import { SessionModel } from '../../models/session.model.js';
+import { env } from '../../config/env.js';
 
 export async function loginController(req: Request, res: Response, next: NextFunction) {
     try {
@@ -16,10 +17,8 @@ export async function loginController(req: Request, res: Response, next: NextFun
         const passMatch = await comparePassword(password, findUser.password);
         if (!passMatch) throw credentialError;
 
-        const THREE_HOURS = 1000 * 60;
-        const THREE_DAYS = 1000 * 60 * 60 * 24 * 3;
-        let duration = THREE_HOURS;
-        if (rememberMe) duration = THREE_DAYS;
+        let duration = env.TIMES.THREE_HOURS;
+        if (rememberMe) duration = env.TIMES.THREE_DAYS;
 
         const newSession = new SessionModel({
             userId: findUser._id,
