@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { ApiResponse } from '../../helpers/response.js';
 import { UserModel } from '../../models/user.model.js';
 import { AppError } from '../../errors/appError.error.js';
-import { comparePassword, getUserWithOutPass } from '../../utils/index.js';
+import { comparePassword, createJWT, getUserWithOutPass } from '../../utils/index.js';
 import { SessionModel } from '../../models/session.model.js';
 
 export async function loginController(req: Request, res: Response, next: NextFunction) {
@@ -29,8 +29,10 @@ export async function loginController(req: Request, res: Response, next: NextFun
         });
 
         const currentSession = await newSession.save();
+        console.log(currentSession._id)
+        const JWT = createJWT(currentSession._id.toString(), duration);
 
-        res.cookie('sessionId', currentSession._id.toString(), {
+        res.cookie('sessionId', JWT, {
             httpOnly: true,
             secure: true,
             sameSite: 'strict',

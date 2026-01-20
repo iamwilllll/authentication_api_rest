@@ -7,4 +7,8 @@ export const env = {
     DB: {
         URL: process.env.DATABASE_URL || '',
     },
+
+    JWT: {
+        KEY: process.env.JWT_SECRET || '',
+    },
 };
