@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer';
 import { env } from '../config/env.js';
+import  colors from 'colors'
 
 type SendEmailServiceProps = {
     to: string;
@@ -23,7 +24,10 @@ const configOptions = {
 export async function sendEmailService({ to, subject, text, html }: SendEmailServiceProps) {
     const transporter = nodemailer.createTransport(configOptions);
     await transporter.verify();
+    console.log(colors.cyan.bold('SMTP Server is ready to take messages'));
 
     const info = await transporter.sendMail({ from: 'E-commerce', to, subject, text, html });
+    console.log(info)
     return info;
+
 }
