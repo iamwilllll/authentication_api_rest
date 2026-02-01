@@ -7,6 +7,8 @@ export type UserT = {
     otpCode: string;
     otpCodeExpiration: Date;
     verified: boolean;
+    resetPasswordOTPCode: string;
+    resetPasswordOTPCodeExpirationTime: Date;
 };
 
 export type UserWithOutPassT = Omit<UserT, 'password'>;

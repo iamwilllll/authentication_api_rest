@@ -13,6 +13,8 @@ const UserSchema = new Schema<UserDocT>(
         otpCode: { type: String, required: false, trim: true },
         otpCodeExpiration: { type: Date, required: false },
         verified: { type: Boolean, required: true, default: false },
+        resetPasswordOTPCode: { type: String, required: false, trim: true },
+        resetPasswordOTPCodeExpirationTime: { type: Date, required: false },
     },
     { timestamps: true, versionKey: false }
 );
