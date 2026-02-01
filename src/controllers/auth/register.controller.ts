@@ -25,7 +25,7 @@ export async function registerController(req: Request, res: Response, next: Next
         const resetPasswordEmailTemplate = fs.readFileSync(templatePath, 'utf-8');
         const html = resetPasswordEmailTemplate.replace('*resetCode*', otpCode);
 
-        await sendEmailService({ to: email, subject: 'Email verification code', text: otpCode, html });
+        await sendEmailService({ to: email, subject: 'Email verification code', html });
         const savedUser = await newUser.save();
         const userWithOutPass = getUserWithOutPass(savedUser.toObject());
 

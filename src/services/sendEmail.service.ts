@@ -1,33 +1,19 @@
-import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
 import { env } from '../config/env.js';
-import  colors from 'colors'
 
 type SendEmailServiceProps = {
     to: string;
     subject: string;
-    text: string;
     html: string;
 };
 
-const { HOST, PORT, SECURE, USER, PASSWORD } = env.SMTP;
+const resend = new Resend(env.RESEND.API_KEY);
 
-const configOptions = {
-    host: HOST,
-    port: PORT,
-    secure: SECURE,
-    auth: {
-        user: USER,
-        pass: PASSWORD,
-    },
-};
-
-export async function sendEmailService({ to, subject, text, html }: SendEmailServiceProps) {
-    const transporter = nodemailer.createTransport(configOptions);
-    await transporter.verify();
-    console.log(colors.cyan.bold('SMTP Server is ready to take messages'));
-
-    const info = await transporter.sendMail({ from: 'E-commerce', to, subject, text, html });
-    console.log(info)
-    return info;
-
+export async function sendEmailService({ to, subject, html }: SendEmailServiceProps) {
+    resend.emails.send({
+        from: env.SMTP.USER,
+        to: to,
+        subject: subject,
+        html: html,
+    });
 }
