@@ -6,6 +6,7 @@ import { comparePassword, getUserWithOutPass } from '../../utils/index.js';
 import { SessionModel } from '../../models/session.model.js';
 import { env } from '../../config/env.js';
 import jwt from 'jsonwebtoken';
+
 export async function loginController(req: Request, res: Response, next: NextFunction) {
     try {
         const { email, password, rememberMe } = req.body;
@@ -18,10 +19,10 @@ export async function loginController(req: Request, res: Response, next: NextFun
         if (!passMatch) throw credentialError;
 
         if (!findUser.verified) throw new AppError('Authentication error.', 401, 'AUTH_ERROR');
-        let duration = env.TIMES.THREE_HOURS;
-        if (rememberMe) duration = env.TIMES.THREE_DAYS;
-
         await SessionModel.updateMany({ userId: findUser._id, isValid: true }, { isValid: false });
+
+        const duration = rememberMe ? env.TIMES.THREE_DAYS : env.TIMES.THREE_HOURS;
+        const jwtDuration = rememberMe ? '3d' : '1h';
 
         const newSession = new SessionModel({
             userId: findUser._id,
@@ -31,11 +32,12 @@ export async function loginController(req: Request, res: Response, next: NextFun
         });
 
         const currentSession = await newSession.save();
-        const JWT = jwt.sign(currentSession._id.toString(), env.JWT.KEY, { expiresIn: duration });
+
+        const JWT = jwt.sign({ sessionId: currentSession._id.toString() }, env.JWT.KEY, { expiresIn: jwtDuration });
 
         res.cookie('sessionId', JWT, {
             httpOnly: true,
-            secure: true,
+            secure: process.env.NODE_ENV === 'production',
             sameSite: 'strict',
             maxAge: duration,
         });

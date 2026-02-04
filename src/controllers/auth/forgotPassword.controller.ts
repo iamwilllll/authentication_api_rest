@@ -22,12 +22,12 @@ export async function forgotPasswordController(req: Request, res: Response, next
         const templatePath = path.join(process.cwd(), 'src', 'email_templates', 'ResetYourPassword.html');
         const resetPasswordEmailTemplate = fs.readFileSync(templatePath, 'utf-8');
         const html = resetPasswordEmailTemplate.replace('*resetCode*', otpCode);
-        
+
         const savedUser = await user.save();
         const userWithOutPass = getUserWithOutPass(savedUser.toObject());
-        
+
         await sendEmailService({ to: email, subject: 'Rest password code', html });
-        ApiResponse.success<{ user: UserWithOutPassT; otpCode: string }>(res, 201, 'User was created successful', {
+        ApiResponse.success<{ user: UserWithOutPassT; otpCode: string }>(res, 201, 'Code was send successful', {
             user: userWithOutPass,
             otpCode,
         });
