@@ -4,15 +4,12 @@ import { UserModel } from '../../models/user.model.js';
 
 export async function loadUser(req: Request, res: Response, next: NextFunction) {
     try {
-        const userId = req.userId;
+        const { userId } = req;
         if (!userId) throw new AppError('Unauthenticated', 401, 'AUTH_ERROR');
 
-        const user = await UserModel.findById(userId).select('-password');
+        const user = await UserModel.findById(userId);
 
-        if (!user) {
-            throw new AppError('User not found', 404, 'USER_NOT_FOUND');
-        }
-
+        if (!user) throw new AppError('User not found', 404, 'USER_NOT_FOUND');
         req.user = user;
 
         return next();

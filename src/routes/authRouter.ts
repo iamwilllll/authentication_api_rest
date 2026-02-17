@@ -29,9 +29,8 @@ authRouter.post('/register', registerMiddlewares, registerController, errorMiddl
 authRouter.put('/email/confirm', emailConfirmMiddlewares, emailConfirmController, errorMiddleware);
 authRouter.put('/email/refresh', refreshEmailVerificationCodeMiddlewares, refreshEmailVerificationCodeController, errorMiddleware);
 authRouter.post('/login', loginMiddlewares, loginController, errorMiddleware);
-
-authRouter.get('/me', authenticate, loadUser, getCurrentUserController, errorMiddleware);
 authRouter.post('/logout', authenticate, logoutController, errorMiddleware);
+authRouter.get('/me', authenticate, loadUser, getCurrentUserController, errorMiddleware);
 
 authRouter.post('/password/forgot', forgotPasswordMiddlewares, forgotPasswordController, errorMiddleware);
 authRouter.post('/password/reset', resetPasswordMiddlewares, resetPasswordController, errorMiddleware);

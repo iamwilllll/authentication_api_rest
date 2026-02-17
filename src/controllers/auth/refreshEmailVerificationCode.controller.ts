@@ -13,7 +13,7 @@ export async function refreshEmailVerificationCodeController(req: Request, res: 
         const existingUser = await UserModel.findOne({ email });
 
         if (!existingUser || existingUser.verified) {
-            return ApiResponse.success<{ otpCode: string }>(res, 200, 'If the account exists, a new verification code has been sent.');
+            return ApiResponse.success(res, 200, 'If the account exists, a new verification code has been sent.');
         }
 
         const otpCode = createOtpCode();
@@ -24,14 +24,13 @@ export async function refreshEmailVerificationCodeController(req: Request, res: 
         const resetPasswordEmailTemplate = fs.readFileSync(templatePath, 'utf-8');
         const html = resetPasswordEmailTemplate.replace('*verificationCode*', otpCode);
 
-        await existingUser.save();
-        await sendEmailService({ to: email, subject: 'Email verification code', html });
+        await Promise.all([existingUser.save(), sendEmailService({ to: email, subject: 'Email verification code', html })]);
 
         //! DEV ONLY:
         //! The OTP is exposed in the response to simulate email delivery
         //! during development. In production, OTPs must be sent via a secure
         //! email provider and never returned in API responses.
-        return ApiResponse.success<{ otpCode: string }>(res, 200, 'If the account exists, a new verification code has been sent.', { otpCode });
+        return ApiResponse.success(res, 200, 'If the account exists, a new verification code has been sent.', { otpCode });
     } catch (err) {
         next(err);
     }
