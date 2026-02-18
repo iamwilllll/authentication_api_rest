@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { UserModel } from '../../models/index.js';
 import { ApiResponse } from '../../helpers/index.js';
-import { createOtpCode, hashPassword } from '../../utils/index.js';
+import { createOtpCode, getUserWithOutPass, hashPassword } from '../../utils/index.js';
 import { env } from '../../config/env.js';
 import { sendEmailService } from '../../services/sendEmail.service.js';
 import fs from 'node:fs';
@@ -33,7 +33,7 @@ export async function registerController(req: Request, res: Response, next: Next
         //! The OTP is exposed in the response to simulate email delivery
         //! during development. In production, OTPs must be sent via a secure
         //! email provider and never returned in API responses.
-        return ApiResponse.success(res, 201, 'User was created successful.', { otpCode });
+        return ApiResponse.success(res, 201, 'User was created successful.', { user: getUserWithOutPass(newUser.toObject()), otpCode });
     } catch (err) {
         next(err);
     }
