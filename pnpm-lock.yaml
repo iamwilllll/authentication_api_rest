@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@wilfrynvil/api-documentation':
-        specifier: ^3.0.7
-        version: 3.0.7(express@5.2.1)(mongoose@9.3.3)
+        specifier: ^3.0.8
+        version: 3.0.8(express@5.2.1)(mongoose@9.3.3)
       bcrypt:
         specifier: ^6.0.0
         version: 6.0.0
@@ -691,8 +691,8 @@ packages:
     resolution: {integrity: sha512-zhahknjobV2FiD6Ee9iLbS7OV9zi10rG26odsQdfBO/hjSzUQbkIYgda+iNKK1zNiW2ey+Lf8MU5btN17V3dUw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@wilfrynvil/api-documentation@3.0.7':
-    resolution: {integrity: sha512-infGKeiaxvB1UpypmrSOfKT7AA5qg2gq+TheYZSo5cK0BzcQ8q4A2Q/UFS+YNJskfnV/w3SCoDETPuo+dVkWAg==}
+  '@wilfrynvil/api-documentation@3.0.8':
+    resolution: {integrity: sha512-CFFTGnDn8S0b7kjpyMTzbRr+JxApUcNYApCH0AM9VTQ9GCAkygPyQSIFPvpJ4VkRLIpOutNU1qPmnuEOC4f+ww==}
     peerDependencies:
       express: ^5.0.0
       mongoose: ^9.0.0
@@ -2150,7 +2150,7 @@ snapshots:
       '@typescript-eslint/types': 8.57.2
       eslint-visitor-keys: 5.0.1
 
-  '@wilfrynvil/api-documentation@3.0.7(express@5.2.1)(mongoose@9.3.3)':
+  '@wilfrynvil/api-documentation@3.0.8(express@5.2.1)(mongoose@9.3.3)':
     dependencies:
       cors: 2.8.6
       dotenv: 17.3.1

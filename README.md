@@ -70,6 +70,7 @@ Create a `.env` file in the root directory:
 
 ```
 PORT=3000
+BASE_URL=your_production_api_url
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_secret_key
 EMAIL_HOST=your_email_host
